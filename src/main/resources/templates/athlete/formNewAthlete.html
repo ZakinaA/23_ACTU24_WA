@@ -47,18 +47,27 @@ body {
 			<form method="post"
 				th:action="@{/saveAthlete}" th:object="${athlete}">
 				<div class="form-group">
+					<label for="nomInput">Nom</label>
+					<input
+							type="text" th:field="*{nom}" class="form-control" id="nomInput"
+							aria-describedby="nomHelp" placeholder="Saisir le nom"> <small
+						id="nomHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small>
+				</div>
+
+				<div class="form-group">
 					<label for="prenomInput">Prénom</label>
 					<input
 						type="text" th:field="*{prenom}" class="form-control" id="firstNameInput"
 						aria-describedby="prenomHelp" placeholder="Saisir le prénom"> <small
 						id="prenomHelp" class="form-text text-muted">Merci d'écrire le prénom de l'athlète.</small>
 				</div>
+
 				<div class="form-group">
-					<label for="nomInput">Nom</label>
+					<label for="datenaissInput">Date de Naissance</label>
 					<input
-						type="text" th:field="*{nom}" class="form-control" id="nomInput"
-						aria-describedby="nomHelp" placeholder="Saisir le nom"> <small
-						id="nomHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small>
+							type="text" th:field="*{datenaiss}" class="form-control" id="firstNameInput"
+							aria-describedby="datenaissHelp" placeholder="Saisir la datenaiss"> <small
+						id="datenaissHelp" class="form-text text-muted">Merci d'écrire la datenaiss de l'athlète.</small>
 				</div>
 
 				<div class="form-group">
@@ -69,8 +78,16 @@ body {
 					</select>
 				</div>
 
+				<div class="form-group">
+					<label for="sportInput">Sport</label>
+					<input
+							type="text" th:field="*{sport}" class="form-control" id="firstNameInput"
+							aria-describedby="sportHelp" placeholder="Saisir le sport"> <small
+						id="sportHelp" class="form-text text-muted">Merci d'écrire le sport de l'athlète.</small>
+				</div>
 
-				<button type="submit" class="btn btn-primary">Créer</button>
+				<a th:href="@{/createAthlete/{id}(id=${athlete.id})}"><button type="submit" class="btn btn-primary">Créer</button>
+
 			</form>
 		</div>
 
