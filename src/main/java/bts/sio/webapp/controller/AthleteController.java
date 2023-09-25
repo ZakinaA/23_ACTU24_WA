@@ -4,6 +4,7 @@ import bts.sio.webapp.model.Athlete;
 import bts.sio.webapp.model.Pays;
 import bts.sio.webapp.service.AthleteService;
 import bts.sio.webapp.service.PaysService;
+import bts.sio.webapp.service.OlympiadeService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,12 +26,23 @@ public class AthleteController {
     @Autowired
     private PaysService paysService;
 
+    @Autowired
+    private OlympiadeService olympiadeService;
+
     @GetMapping("/")
     public String home(Model model) {
         Iterable<Athlete> listAthletes = athleteservice.getAthletes();
         model.addAttribute("athletes", listAthletes);
         return "home";
     }
+
+    @GetMapping("/ConsulterAthlete/{id}")
+    public String consulterAthlete(@PathVariable("id") final int id, Model model) {
+        Athlete athlete = athleteservice.getAthlete(id);
+        model.addAttribute("athlete", athlete);
+        return "athlete/consulterAthlete";
+    }
+
 
     @GetMapping("/createAthlete")
     public String createAthlete(Model model) {
