@@ -44,45 +44,61 @@ body {
 
 		<h2 class="h2">Modification d'un athlète</h2>
 		<div>
-			<form method="post"
-				th:action="@{/saveAthlete}" th:object="${athlete}">
-				<div class="form-group">
-					<input
-						type="hidden" th:field="*{id}" class="form-control">
-				</div>
-				<div class="form-group">
-					<!-- Champ pour le nom -->
-					<label for="nomInput">Nom</label>
-					<input
-							type="text" th:field="*{nom}" class="form-control" id="nomInputInput"
-							aria-describedby="nomInputHelp" placeholder="Saisir le nom"> <small
-							id="prenomInputHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small><br/>
+			<form method="put"
+				th:action="@{/updateAthlete}" th:object="${athlete}">
+					<div class="form-group">
+						<input
+							type="hidden" th:field="*{id}" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="nomInput">Nom</label>
+						<input
+								type="text" th:field="*{nom}" class="form-control" id="nomInput"
+								aria-describedby="nomHelp" placeholder="Saisir votre nom"> <small
+							id="nomHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small>
+					</div>
 
-					<!-- Champ pour le prenom -->
-					<label for="prenomInput">Prénom</label>
-					<input
-						type="text" th:field="*{prenom}" class="form-control" id="prenomInputInput"
-						aria-describedby="prenomInputHelp" placeholder="Saisir le prénom"> <small
-						id="prenomInputHelp" class="form-text text-muted">Merci d'écrire le prénom de l'athlète.</small><br/>
+						<!-- Champ pour le prenom -->
+					<div class="form-group">
+						<label for="prenomInput">Prénom</label>
+						<input
+								type="text" th:field="*{prenom}" class="form-control" id="firstNameInput"
+								aria-describedby="prenomHelp" placeholder="Saisir votre prénom"> <small
+							id="prenomHelp" class="form-text text-muted">Merci d'écrire le prénom de l'athlète.</small>
+					</div>
 
 					<!-- Champ pour la date de naissance -->
-					<label for="datenaissInput">Date de Naissance</label>
-					<input type="date" th:field="*{datenaiss}" class="form-control" id="datenaissInput" aria-describedby="datenaissInputHelp">
-					<small id="datenaissInputHelp" class="form-text text-muted">Merci d'indiquer la date de naissance de l'athlète.</small><br/>
+					<div class="form-group">
+						<label for="datenaissInput">Date de Naissance</label>
+						<input
+								type="date" th:field="*{datenaiss}" class="form-control" id="firstNameInput"
+								aria-describedby="datenaissHelp" placeholder="Saisir votre dateNaissance"> <small
+							id="datenaissHelp" class="form-text text-muted">Merci d'écrire la datenaiss de l'athlète.</small>
+					</div>
 
 					<!-- Champ pour le pays -->
-					<label for="paysInput">Pays</label>
-					<input type="text" th:field="*{pays.nom}" class="form-control" id="paysInput" aria-describedby="paysInputHelp" placeholder="Saisir le pays">
-					<small id="paysInputHelp" class="form-text text-muted">Merci d'indiquer le pays d'origine de l'athlète.</small><br/>
+					<div class="form-group">
+						<label for="pays">Pays :</label>
+						<select id="pays" class="form-control" th:field="*{pays.id}">
+							<option value="">Sélectionnez un pays</option>
+							<option th:each="pays : ${listPays}" th:value="${pays.id}" th:text="${pays.nom}"></option>
+						</select>
+					</div>
 
 					<!-- Champ pour le sport -->
-					<label for="sportInput">Sport</label>
-					<input type="text" th:field="*{sport.nom}" class="form-control" id="sportInput" aria-describedby="sportInputHelp" placeholder="Saisir le sport">
-					<small id="sportInputHelp" class="form-text text-muted">Merci d'indiquer le sport pratiqué par l'athlète.</small>
-				</div>
+					<div class="form-group">
+						<label for="sportInput">Sport</label>
+						<select id="sport" class="form-control" th:field="*{sport.id}">
+							<option value="">Sélectionnez un sport</option>
+							<option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
+						</select>
+					</div>
 
-				
-				<button type="submit" class="btn btn-primary">Modifier</button>
+
+
+				<a th:href="@{/updateAthlete/{id}(id=${athlete.id})}"><button type="submit" class="btn btn-primary">Modifier</button>
+
+
 			</form>
 		</div>
 

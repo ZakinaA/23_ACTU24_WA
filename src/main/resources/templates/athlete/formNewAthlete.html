@@ -50,7 +50,7 @@ body {
 					<label for="nomInput">Nom</label>
 					<input
 							type="text" th:field="*{nom}" class="form-control" id="nomInput"
-							aria-describedby="nomHelp" placeholder="Saisir le nom"> <small
+							aria-describedby="nomHelp" placeholder="Saisir votre nom"> <small
 						id="nomHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small>
 				</div>
 
@@ -58,15 +58,15 @@ body {
 					<label for="prenomInput">Prénom</label>
 					<input
 						type="text" th:field="*{prenom}" class="form-control" id="firstNameInput"
-						aria-describedby="prenomHelp" placeholder="Saisir le prénom"> <small
+						aria-describedby="prenomHelp" placeholder="Saisir votre prénom"> <small
 						id="prenomHelp" class="form-text text-muted">Merci d'écrire le prénom de l'athlète.</small>
 				</div>
 
 				<div class="form-group">
 					<label for="datenaissInput">Date de Naissance</label>
 					<input
-							type="text" th:field="*{datenaiss}" class="form-control" id="firstNameInput"
-							aria-describedby="datenaissHelp" placeholder="Saisir la datenaiss"> <small
+							type="date" th:field="*{datenaiss}" class="form-control" id="firstNameInput"
+							aria-describedby="datenaissHelp" placeholder="Saisir votre dateNaissance"> <small
 						id="datenaissHelp" class="form-text text-muted">Merci d'écrire la datenaiss de l'athlète.</small>
 				</div>
 
@@ -80,10 +80,10 @@ body {
 
 				<div class="form-group">
 					<label for="sportInput">Sport</label>
-					<input
-							type="text" th:field="*{sport}" class="form-control" id="firstNameInput"
-							aria-describedby="sportHelp" placeholder="Saisir le sport"> <small
-						id="sportHelp" class="form-text text-muted">Merci d'écrire le sport de l'athlète.</small>
+					<select id="sport" class="form-control" th:field="*{sport.id}">
+						<option value="">Sélectionnez un sport</option>
+						<option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
+					</select>
 				</div>
 
 				<a th:href="@{/createAthlete/{id}(id=${athlete.id})}"><button type="submit" class="btn btn-primary">Créer</button>
