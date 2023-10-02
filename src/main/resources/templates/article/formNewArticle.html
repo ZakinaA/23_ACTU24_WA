@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>New Article</title>
+
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .special {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container special">
+    <h2 class="h2">Ajout d'un nouvel article</h2>
+    <div>
+        <form method="post" th:action="@{/saveArticle}" th:object="${article}">
+            <div class="form-group">
+                <label for="titreInput">Titre</label>
+                <input type="text" th:field="*{titre}" class="form-control" id="titreInput"
+                       aria-describedby="titreHelp" placeholder="Saisir le titre de l'article">
+                <small id="titreHelp" class="form-text text-muted">Merci de saisir le titre de l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="contenuInput">Contenu</label>
+                <input type="text" th:field="*{contenu}" class="form-control" id="contenuInput"
+                       aria-describedby="contenuHelp" placeholder="Saisir le contenu de l'article">
+                <small id="contenuHelp" class="form-text text-muted">Merci de saisir le contenu de l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="auteurInput">Auteur</label>
+                <input type="text" th:field="*{auteur}" class="form-control" id="auteurInput"
+                       aria-describedby="auteurHelp" placeholder="Saisir l'auteur de l'article">
+                <small id="auteurHelp" class="form-text text-muted">Merci de saisir l'auteur de l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="athleteInput">Athlète :</label>
+                <select id="athleteInput" class="form-control" th:field="*{athlete.id}">
+                    <option value="">Sélectionnez un athlète</option>
+                    <option th:each="athlete : ${listAthlete}" th:value="${athlete.id}" th:text="${athlete.nom}"></option>
+                </select>
+            </div>
+
+            <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary">Publier</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

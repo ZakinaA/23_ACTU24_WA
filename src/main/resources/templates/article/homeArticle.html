@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Actu24</title>
+
+    <style>
+        body {
+            padding-top: 80px; /* Augmenter l'espacement au-dessus du contenu */
+            background-color: #f4f4f4; /* Ajouter une couleur de fond */
+        }
+
+        .article {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff; /* Fond blanc pour chaque article */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajouter une ombre légère */
+        }
+
+        .article h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333; /* Couleur de texte plus foncée pour les titres */
+        }
+
+        .article p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666; /* Couleur de texte légèrement plus claire */
+        }
+
+        .article img {
+            max-width: 100%; /* Assurez-vous que les images ne dépassent pas de leur conteneur */
+            margin-top: 10px;
+        }
+
+        .article a.btn {
+            font-size: 16px;
+            background-color: #007bff; /* Couleur de fond bleue pour le bouton */
+            color: #fff; /* Couleur de texte blanche pour le bouton */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div th:each="article: ${articles}" class="article">
+                <h3 th:text="${article.titre}">Titre de l'article</h3>
+                <p th:text="${article.contenu}">Contenu de l'article.</p>
+                <p th:text="${article.athlete.nom}">Nom : Nom de l'athlete</p>
+                <a href="#" class="btn btn-primary">Lire la suite</a>
+                <td>
+                    <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
+                    <a th:href="@{/deleteArticle/{id}(id=${article.id})}"><button class="btn btn-danger">Supprimer</button></a>
+                </td>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
