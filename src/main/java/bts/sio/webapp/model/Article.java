@@ -19,6 +19,8 @@ public class Article {
 
     private String contenu;
 
+    private String image;
+
     private LocalDate date;
 
     private LocalTime heure;
