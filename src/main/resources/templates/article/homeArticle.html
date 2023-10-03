@@ -55,15 +55,17 @@
         <div class="col-md-8">
             <div th:each="article: ${articles}" class="article">
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
+                <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
+                <p th:text="${article.date}">Date de Publication de l'article</p>
+                <p th:text="${article.heure}">Heure de l'article</p>
                 <p th:text="${article.athlete.nom}">Nom : Nom de l'athlete</p>
+                <p th:text="${article.auteur}">Nom : Nom de l'athlete</p>
                 <a href="#" class="btn btn-primary">Lire la suite</a>
                 <td>
                     <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
                     <a th:href="@{/deleteArticle/{id}(id=${article.id})}"><button class="btn btn-danger">Supprimer</button></a>
                 </td>
-
-            </div>
         </div>
     </div>
 </div>
