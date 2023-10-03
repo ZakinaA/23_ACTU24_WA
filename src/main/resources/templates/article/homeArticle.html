@@ -39,6 +39,8 @@
         .article img {
             max-width: 100%; /* Assurez-vous que les images ne dépassent pas de leur conteneur */
             margin-top: 10px;
+            float: right; /* Aligner l'image à droite */
+            margin-left: 20px; /* Ajouter un espacement entre le texte et l'image */
         }
 
         .article a.btn {
@@ -57,6 +59,7 @@
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
                 <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
+                <img th:if="${article.image != null}" th:src="@{'src/main/resources/image/' + ${article.image}}" alt="Image de l'article">
                 <p th:text="${article.date}">Date de Publication de l'article</p>
                 <p th:text="${article.heure}">Heure de l'article</p>
                 <p th:text="${article.athlete.nom}">Nom : Nom de l'athlete</p>
