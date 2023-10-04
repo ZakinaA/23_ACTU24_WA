@@ -29,4 +29,6 @@ public class Article {
 
     private Athlete athlete;
 
+    private Pays pays;
+
 }
