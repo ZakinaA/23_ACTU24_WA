@@ -31,6 +31,9 @@ public class ArticleController {
     @Autowired
     private SportService sportService;
 
+    @Autowired
+    private PaysService paysService;
+
     @GetMapping("/homeArticle")
     public String homeArticle(Model model) {
         Iterable<Article> listArticles = articleservice.getArticles();
@@ -55,6 +58,9 @@ public class ArticleController {
 
         Iterable<Sport> listSport = sportService.getSports();
         model.addAttribute("listSport", listSport);
+
+        Iterable<Pays> listPays = paysService.getLesPays();
+        model.addAttribute("listPays", listPays);
 
         return "article/formNewArticle";
     }
