@@ -60,7 +60,9 @@
                 <a href="#" class="btn btn-primary">Lire la suite</a>
                 <td>
                     <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
-                    <a th:href="@{/deleteArticle/{id}(id=${article.id})}"><button class="btn btn-danger">Supprimer</button></a>
+                    <a th:href="@{/deleteArticle/{id}(id=${article.id})}" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </a>
                 </td>
 
             </div>
