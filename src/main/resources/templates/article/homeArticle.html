@@ -60,6 +60,7 @@
                 <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
                 <img th:if="${article.image != null}" th:src="@{'src/main/resources/image/' + ${article.image}}" alt="Image de l'article">
+                <p th:text="${article.pays.nom}">Pays de l'evenement</p>
                 <p th:text="${article.date}">Date de Publication de l'article</p>
                 <p th:text="${article.heure}">Heure de l'article</p>
                 <p th:text="${article.athlete.nom}">Nom : Nom de l'athlete</p>
