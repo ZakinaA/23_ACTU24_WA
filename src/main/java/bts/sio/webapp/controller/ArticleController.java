@@ -1,9 +1,6 @@
 package bts.sio.webapp.controller;
 
-import bts.sio.webapp.model.Article;
-import bts.sio.webapp.model.Athlete;
-import bts.sio.webapp.model.Pays;
-import bts.sio.webapp.model.Sport;
+import bts.sio.webapp.model.*;
 import bts.sio.webapp.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,9 @@ public class ArticleController {
     @Autowired
     private PaysService paysService;
 
+    @Autowired
+    private AuteurService auteurService;
+
     @GetMapping("/homeArticle")
     public String homeArticle(Model model) {
         Iterable<Article> listArticles = articleservice.getArticles();
@@ -61,6 +61,9 @@ public class ArticleController {
 
         Iterable<Pays> listPays = paysService.getLesPays();
         model.addAttribute("listPays", listPays);
+
+        Iterable<Auteur> listAuteur = auteurService.getAuteurs();
+        model.addAttribute("listAuteur", listAuteur);
 
         return "article/formNewArticle";
     }
