@@ -66,14 +66,6 @@
                 <small id="heureHelp" class="form-text text-muted">Merci de saisir l'heure de l'article.</small>
             </div>
 
-
-            <div class="form-group">
-                <label for="auteurInput">Auteur</label>
-                <input type="text" th:field="*{auteur}" class="form-control" id="auteurInput"
-                       aria-describedby="auteurHelp" placeholder="Saisir l'auteur de l'article">
-                <small id="auteurHelp" class="form-text text-muted">Merci de saisir l'auteur de l'article.</small>
-            </div>
-
             <div class="form-group">
                 <label for="athleteInput">Athlète :</label>
                 <select id="athleteInput" class="form-control" th:field="*{athlete.id}">
@@ -90,8 +82,60 @@
                 </select>
             </div>
 
-            <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary">Publier</button>
+            <div class="form-group">
+                <label for="auteurInput">Auditeur de l'article :</label>
+                <select id="auteurInput" class="form-control" th:field="*{auteur.id}">
+                    <option value="">Sélectionnez un auteur</option>
+                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom}"></option>
+                </select>
+            </div>
+
+            <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary" id="publishButton">Publier</button>
         </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sélectionnez les champs nécessaires
+                const titreInput = document.getElementById("titreInput");
+                const contenuInput = document.getElementById("contenuInput");
+                const dateInput = document.getElementById("dateInput");
+                const heureInput = document.getElementById("heureInput");
+                const athleteInput = document.getElementById("athleteInput");
+                const paysInput = document.getElementById("paysInput");
+                const auteurInput = document.getElementById("auteurInput");
+                const publishButton = document.getElementById("publishButton");
+
+                // Fonction pour vérifier si tous les champs sont remplis
+                function checkFields() {
+                    const titreValue = titreInput.value.trim();
+                    const contenuValue = contenuInput.value.trim();
+                    const dateValue = dateInput.value.trim();
+                    const heureValue = heureInput.value.trim();
+                    const athleteValue = athleteInput.value.trim();
+                    const paysValue = paysInput.value.trim();
+                    const auteurValue = auteurInput.value.trim();
+
+                    // Activer le bouton si tous les champs requis sont remplis
+                    if (titreValue !== "" && contenuValue !== "" && dateValue !== "" && heureValue !== "" && athleteValue !== "" && paysValue !== "" && auteurValue !== "") {
+                        publishButton.disabled = false;
+                    } else {
+                        publishButton.disabled = true;
+                    }
+                }
+
+                // Écoutez les événements de changement pour chaque champ
+                titreInput.addEventListener("input", checkFields);
+                contenuInput.addEventListener("input", checkFields);
+                dateInput.addEventListener("input", checkFields);
+                heureInput.addEventListener("input", checkFields);
+                athleteInput.addEventListener("change", checkFields);
+                paysInput.addEventListener("change", checkFields);
+                auteurInput.addEventListener("change", checkFields);
+
+                // Assurez-vous que le bouton est désactivé au chargement initial
+                checkFields();
+            });
+        </script>
     </div>
 </div>
 
