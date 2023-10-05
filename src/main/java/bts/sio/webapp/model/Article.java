@@ -25,10 +25,9 @@ public class Article {
 
     private LocalTime heure;
 
-    private String auteur;
-
     private Athlete athlete;
 
     private Pays pays;
 
+    private Auteur auteur;
 }
