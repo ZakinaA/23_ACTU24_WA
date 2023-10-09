@@ -39,6 +39,13 @@
             </div>
 
             <div class="form-group">
+                <label for="soustitreInput">Sous titre</label>
+                <input type="text" th:field="*{soustitre}" class="form-control" id="soustitreInput"
+                       aria-describedby="soustitreHelp" placeholder="Saisir le soustitre de l'article">
+                <small id="soustitreHelp" class="form-text text-muted">Merci de saisir le soustitre de l'article.</small>
+            </div>
+
+            <div class="form-group">
                 <label for="contenuInput">Contenu</label>
                 <input type="text" th:field="*{contenu}" class="form-control" id="contenuInput"
                        aria-describedby="contenuHelp" placeholder="Saisir le contenu de l'article">
@@ -46,10 +53,23 @@
             </div>
 
             <div class="form-group">
-                <label for="auteurInput">Auteur</label>
-                <input type="text" th:field="*{auteur}" class="form-control" id="auteurInput"
-                       aria-describedby="auteurHelp" placeholder="Saisir l'auteur de l'article">
-                <small id="auteurHelp" class="form-text text-muted">Merci de saisir l'auteur de l'article.</small>
+                <label for="imageInput">Image</label>
+                <input type="file" name="image" id="imageInput" class="form-control-file">
+                <small id="imageHelp" class="form-text text-muted">Sélectionnez une image pour l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="dateInput">Date de Publication</label>
+                <input type="date" th:field="*{date}" class="form-control" id="dateInput"
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                <small id="dateHelp" class="form-text text-muted">Merci de saisir datePublication de l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="heureInput">Heure</label>
+                <input type="time" th:field="*{heure}" class="form-control" id="heureInput"
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                <small id="heureHelp" class="form-text text-muted">Merci de saisir l'heure de l'article.</small>
             </div>
 
             <div class="form-group">
@@ -57,6 +77,22 @@
                 <select id="athleteInput" class="form-control" th:field="*{athlete.id}">
                     <option value="">Sélectionnez un athlète</option>
                     <option th:each="athlete : ${listAthlete}" th:value="${athlete.id}" th:text="${athlete.nom}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="paysInput">Lieu de l'evenement Pays :</label>
+                <select id="paysInput" class="form-control" th:field="*{pays.id}">
+                    <option value="">Sélectionnez un pays</option>
+                    <option th:each="pays : ${listPays}" th:value="${pays.id}" th:text="${pays.nom}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="auteurInput">Auditeur de l'article :</label>
+                <select id="auteurInput" class="form-control" th:field="*{auteur.id}">
+                    <option value="">Sélectionnez un auteur</option>
+                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom}"></option>
                 </select>
             </div>
 

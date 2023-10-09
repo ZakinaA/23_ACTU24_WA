@@ -1,13 +1,7 @@
 package bts.sio.webapp.controller;
 
-import bts.sio.webapp.model.Article;
-import bts.sio.webapp.model.Athlete;
-import bts.sio.webapp.model.Pays;
-import bts.sio.webapp.model.Sport;
-import bts.sio.webapp.service.AthleteService;
-import bts.sio.webapp.service.ArticleService;
-import bts.sio.webapp.service.EpreuveService;
-import bts.sio.webapp.service.SportService;
+import bts.sio.webapp.model.*;
+import bts.sio.webapp.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +28,12 @@ public class ArticleController {
     @Autowired
     private SportService sportService;
 
+    @Autowired
+    private PaysService paysService;
+
+    @Autowired
+    private AuteurService auteurService;
+
     @GetMapping("/homeArticle")
     public String homeArticle(Model model) {
         Iterable<Article> listArticles = articleservice.getArticles();
@@ -59,6 +59,12 @@ public class ArticleController {
         Iterable<Sport> listSport = sportService.getSports();
         model.addAttribute("listSport", listSport);
 
+        Iterable<Pays> listPays = paysService.getLesPays();
+        model.addAttribute("listPays", listPays);
+
+        Iterable<Auteur> listAuteur = auteurService.getAuteurs();
+        model.addAttribute("listAuteur", listAuteur);
+
         return "article/formNewArticle";
     }
 
@@ -80,6 +86,12 @@ public class ArticleController {
 
         Iterable<Athlete> listAthlete = athleteservice.getAthletes();
         model.addAttribute("listAthlete", listAthlete);
+
+        Iterable<Pays> listPays = paysService.getLesPays();
+        model.addAttribute("listPays", listPays);
+
+        Iterable<Auteur> listAuteur = auteurService.getAuteurs();
+        model.addAttribute("listAuteur", listAuteur);
 
         return "article/formUpdateArticle";
     }

@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-    <title>Actu24</title>
+    <title>Actu24 - L'actualité du sport</title>
 
     <style>
         body {
@@ -39,6 +39,8 @@
         .article img {
             max-width: 100%; /* Assurez-vous que les images ne dépassent pas de leur conteneur */
             margin-top: 10px;
+            float: right; /* Aligner l'image à droite */
+            margin-left: 20px; /* Ajouter un espacement entre le texte et l'image */
         }
 
         .article a.btn {
@@ -55,17 +57,22 @@
         <div class="col-md-8">
             <div th:each="article: ${articles}" class="article">
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
+                <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
-                <p th:text="${article.athlete.nom}">Nom : Nom de l'athlete</p>
-                <a href="#" class="btn btn-primary">Lire la suite</a>
+                <img th:if="${article.image != null}" th:src="@{'src/main/resources/image/' + ${article.image}}" alt="Image de l'article">
+                <p th:text="'Pays : ' + ${article.pays.nom}">Pays de l'événement</p>
+                <p th:text="'Athlete : ' + ${article.athlete.nom}">Nom : Nom de l'athlète</p>
+                <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
+                <p th:text="'Publié le ' + ${article.date} + ' à ' + ${article.heure} + ' par ' + ${article.auteur.nom} + ' ' + ${article.auteur.prenom}">Date de Publication de l'article</p>
+                <td><a th:href="@{'/ConsulterArticle/' + ${article.id}}" class="btn btn-primary">
+                    Lire la suite
+                </a></td>
                 <td>
                     <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
                     <a th:href="@{/deleteArticle/{id}(id=${article.id})}" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">
                         <button class="btn btn-danger">Supprimer</button>
                     </a>
                 </td>
-
-            </div>
         </div>
     </div>
 </div>

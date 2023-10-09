@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container special">
-    <h2 class="h2">Ajout d'un nouvel article</h2>
+    <h2 class="h2">Création d'un nouvel article</h2><br/>
     <div>
         <form method="post" th:action="@{/saveArticle}" th:object="${article}">
             <div class="form-group">
@@ -33,6 +33,13 @@
             </div>
 
             <div class="form-group">
+                <label for="soustitreInput">Sous titre</label>
+                <input type="text" th:field="*{soustitre}" class="form-control" id="soustitreInput"
+                       aria-describedby="soustitreHelp" placeholder="Saisir le soustitre de l'article">
+                <small id="soustitreHelp" class="form-text text-muted">Merci de saisir le soustitre de l'article.</small>
+            </div>
+
+            <div class="form-group">
                 <label for="contenuInput">Contenu</label>
                 <input type="text" th:field="*{contenu}" class="form-control" id="contenuInput"
                        aria-describedby="contenuHelp" placeholder="Saisir le contenu de l'article">
@@ -40,10 +47,23 @@
             </div>
 
             <div class="form-group">
-                <label for="auteurInput">Auteur</label>
-                <input type="text" th:field="*{auteur}" class="form-control" id="auteurInput"
-                       aria-describedby="auteurHelp" placeholder="Saisir l'auteur de l'article">
-                <small id="auteurHelp" class="form-text text-muted">Merci de saisir l'auteur de l'article.</small>
+                <label for="imageInput">Image</label>
+                <input type="file" name="image" id="imageInput" class="form-control-file">
+                <small id="imageHelp" class="form-text text-muted">Sélectionnez une image pour l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="dateInput">Date de Publication</label>
+                <input type="date" th:field="*{date}" class="form-control" id="dateInput"
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                <small id="dateHelp" class="form-text text-muted">Merci de saisir datePublication de l'article.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="heureInput">Heure</label>
+                <input type="time" th:field="*{heure}" class="form-control" id="heureInput"
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                <small id="heureHelp" class="form-text text-muted">Merci de saisir l'heure de l'article.</small>
             </div>
 
             <div class="form-group">
@@ -54,8 +74,70 @@
                 </select>
             </div>
 
-            <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary">Publier</button>
+            <div class="form-group">
+                <label for="paysInput">Lieu de l'evenement Pays :</label>
+                <select id="paysInput" class="form-control" th:field="*{pays.id}">
+                    <option value="">Sélectionnez un pays</option>
+                    <option th:each="pays : ${listPays}" th:value="${pays.id}" th:text="${pays.nom}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="auteurInput">Auditeur de l'article :</label>
+                <select id="auteurInput" class="form-control" th:field="*{auteur.id}">
+                    <option value="">Sélectionnez un auteur</option>
+                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom} + ' ' + ${auteur.prenom}"></option>
+                </select>
+            </div>
+            <p>Si vous n'êtes pas dans la liste des auditeurs, vous pouvez <a th:href="@{/createAuteur}">vous inscrire</a>.</p>
+
+
+            <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary" id="publishButton">Publier</button>
         </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sélectionnez les champs nécessaires
+                const titreInput = document.getElementById("titreInput");
+                const contenuInput = document.getElementById("contenuInput");
+                const dateInput = document.getElementById("dateInput");
+                const heureInput = document.getElementById("heureInput");
+                const athleteInput = document.getElementById("athleteInput");
+                const paysInput = document.getElementById("paysInput");
+                const auteurInput = document.getElementById("auteurInput");
+                const publishButton = document.getElementById("publishButton");
+
+                // Fonction pour vérifier si tous les champs sont remplis
+                function checkFields() {
+                    const titreValue = titreInput.value.trim();
+                    const contenuValue = contenuInput.value.trim();
+                    const dateValue = dateInput.value.trim();
+                    const heureValue = heureInput.value.trim();
+                    const athleteValue = athleteInput.value.trim();
+                    const paysValue = paysInput.value.trim();
+                    const auteurValue = auteurInput.value.trim();
+
+                    // Activer le bouton si tous les champs requis sont remplis
+                    if (titreValue !== "" && contenuValue !== "" && dateValue !== "" && heureValue !== "" && athleteValue !== "" && paysValue !== "" && auteurValue !== "") {
+                        publishButton.disabled = false;
+                    } else {
+                        publishButton.disabled = true;
+                    }
+                }
+
+                // Écoutez les événements de changement pour chaque champ
+                titreInput.addEventListener("input", checkFields);
+                contenuInput.addEventListener("input", checkFields);
+                dateInput.addEventListener("input", checkFields);
+                heureInput.addEventListener("input", checkFields);
+                athleteInput.addEventListener("change", checkFields);
+                paysInput.addEventListener("change", checkFields);
+                auteurInput.addEventListener("change", checkFields);
+
+                // Assurez-vous que le bouton est désactivé au chargement initial
+                checkFields();
+            });
+        </script>
     </div>
 </div>
 
