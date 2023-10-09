@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container special">
-    <h2 class="h2">Ajout d'un nouvel article</h2>
+    <h2 class="h2">Création d'un nouvel article</h2><br/>
     <div>
         <form method="post" th:action="@{/saveArticle}" th:object="${article}">
             <div class="form-group">
@@ -86,9 +86,11 @@
                 <label for="auteurInput">Auditeur de l'article :</label>
                 <select id="auteurInput" class="form-control" th:field="*{auteur.id}">
                     <option value="">Sélectionnez un auteur</option>
-                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom}"></option>
+                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom} + ' ' + ${auteur.prenom}"></option>
                 </select>
             </div>
+            <p>Si vous n'êtes pas dans la liste des auditeurs, vous pouvez <a th:href="@{/createAuteur}">vous inscrire</a>.</p>
+
 
             <a th:href="@{/createArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary" id="publishButton">Publier</button>
         </form>
