@@ -34,14 +34,14 @@ public class ArticleController {
     @Autowired
     private AuteurService auteurService;
 
-    @GetMapping("/homeArticle")
-    public String homeArticle(Model model) {
+    @GetMapping("/listeArticle")
+    public String listeArticle(Model model) {
         Iterable<Article> listArticles = articleservice.getArticles();
         model.addAttribute("articles", listArticles);
-        return "/article/homeArticle";
+        return "article/listeArticle";
     }
 
-    @GetMapping("/ConsulterArticle/{id}")
+    @GetMapping("/consulterArticle/{id}")
     public String consulterArticle(@PathVariable("id") final int id, Model model) {
         Article article = articleservice.getArticle(id);
         model.addAttribute("article", article);
@@ -76,7 +76,7 @@ public class ArticleController {
             article.setTitre(current.getTitre());
         }
         articleservice.saveArticle(article);
-        return new ModelAndView("redirect:/homeArticle");
+        return new ModelAndView("redirect:/listeArticle");
     }
 
     @GetMapping("/updateArticle/{id}")
@@ -99,7 +99,7 @@ public class ArticleController {
     @GetMapping("/deleteArticle/{id}")
     public ModelAndView deleteArticle(@PathVariable("id") final int id) {
         articleservice.deleteArticle(id);
-        return new ModelAndView("redirect:/homeArticle");
+        return new ModelAndView("redirect:/listeArticle");
     }
 
 }
