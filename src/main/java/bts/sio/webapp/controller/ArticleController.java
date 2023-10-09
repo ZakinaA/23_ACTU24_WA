@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 @Data
 @Controller
 public class ArticleController {
@@ -37,7 +42,15 @@ public class ArticleController {
     @GetMapping("/homeArticle")
     public String homeArticle(Model model) {
         Iterable<Article> listArticles = articleservice.getArticles();
-        model.addAttribute("articles", listArticles);
+
+        List<Article> articles = new ArrayList<>();
+        listArticles.forEach(articles::add);
+
+        articles.sort(Comparator.comparing(Article::getDate)
+                .thenComparing(Article::getHeure)
+                .reversed());
+
+        model.addAttribute("articles", articles);
         return "/article/homeArticle";
     }
 
