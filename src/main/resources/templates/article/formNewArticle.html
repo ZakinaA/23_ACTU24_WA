@@ -52,14 +52,14 @@
                 <small id="imageHelp" class="form-text text-muted">Sélectionnez une image pour l'article.</small>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="dateInput">Date de Publication</label>
                 <input type="date" th:field="*{date}" class="form-control" id="dateInput"
                        aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
                 <small id="dateHelp" class="form-text text-muted">Merci de saisir datePublication de l'article.</small>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="heureInput">Heure</label>
                 <input type="time" th:field="*{heure}" class="form-control" id="heureInput"
                        aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
@@ -138,6 +138,34 @@
                 checkFields();
             });
         </script>
+
+        // Code JavaScript qui permet de recuperer la date et heure automatiquement dans le formulaire
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sélectionnez les champs date et heure
+                const dateInput = document.getElementById("dateInput");
+                const heureInput = document.getElementById("heureInput");
+
+                // Obtenez la date et l'heure actuelles
+                const now = new Date();
+
+                // Formattez la date pour le champ date (AAAA-MM-JJ)
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // Ajoute un 0 au besoin
+                const day = String(now.getDate()).padStart(2, '0'); // Ajoute un 0 au besoin
+                const formattedDate = `${year}-${month}-${day}`;
+
+                // Formattez l'heure pour le champ heure (HH:MM)
+                const hours = String(now.getHours()).padStart(2, '0'); // Ajoute un 0 au besoin
+                const minutes = String(now.getMinutes()).padStart(2, '0'); // Ajoute un 0 au besoin
+                const formattedTime = `${hours}:${minutes}`;
+
+                // Remplissez les champs date et heure avec les valeurs actuelles
+                dateInput.value = formattedDate;
+                heureInput.value = formattedTime;
+            });
+        </script>
+
     </div>
 </div>
 
