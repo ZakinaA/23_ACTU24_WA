@@ -64,7 +64,7 @@
                 <p th:text="'Athlete : ' + ${article.athlete.nom}">Nom : Nom de l'athlète</p>
                 <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
                 <p th:text="'Publié le ' + ${article.date} + ' à ' + ${article.heure} + ' par ' + ${article.auteur.nom} + ' ' + ${article.auteur.prenom}">Date de Publication de l'article</p>
-                <td><a th:href="@{'/ConsulterArticle/' + ${article.id}}" class="btn btn-primary">
+                <td><a th:href="@{'/consulterArticle/' + ${article.id}}" class="btn btn-primary">
                     Lire la suite
                 </a></td>
                 <td>
@@ -83,5 +83,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+</div>
 </body>
 </html>
