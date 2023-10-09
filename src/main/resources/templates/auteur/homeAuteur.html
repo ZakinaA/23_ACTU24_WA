@@ -43,7 +43,9 @@
 
                 <td>
                     <a th:href="@{/updateAuteur/{id}(id=${auteur.id})}"><button class="btn btn-info">Modifier</button></a>
-                    <a th:href="@{/deleteAuteur/{id}(id=${auteur.id})}"><button class="btn btn-danger">Supprimer</button></a>
+                    <a th:href="@{/deleteAuteur/{id}(id=${auteur.id})}" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </a>
                 </td>
             </tr>
             </tbody>
