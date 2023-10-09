@@ -87,6 +87,12 @@ public class ArticleController {
         Iterable<Athlete> listAthlete = athleteservice.getAthletes();
         model.addAttribute("listAthlete", listAthlete);
 
+        Iterable<Pays> listPays = paysService.getLesPays();
+        model.addAttribute("listPays", listPays);
+
+        Iterable<Auteur> listAuteur = auteurService.getAuteurs();
+        model.addAttribute("listAuteur", listAuteur);
+
         return "article/formUpdateArticle";
     }
 
