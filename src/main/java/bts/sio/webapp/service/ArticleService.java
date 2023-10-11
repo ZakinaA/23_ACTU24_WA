@@ -30,8 +30,15 @@ public class ArticleService {
     public Article saveArticle(Article article) {
         Article savedArticle;
 
-        // Functional rule : Last name must be capitalized.
         article.setTitre(article.getTitre().toUpperCase());
+        article.setSoustitre(article.getTitre());
+        article.setContenu(article.getContenu());
+        article.setImage(article.getImage());
+        article.setDate(article.getDate());
+        article.setHeure(article.getHeure());
+        article.setAthlete(article.getAthlete());
+        article.setPays(article.getPays());
+        article.setAuteur(article.getAuteur());
 
         if(article.getId() == null) {
             // If id is null, then it is a new employee.
@@ -42,4 +49,5 @@ public class ArticleService {
 
         return savedArticle;
     }
+
 }

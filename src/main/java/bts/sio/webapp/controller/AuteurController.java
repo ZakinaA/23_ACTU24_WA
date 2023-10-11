@@ -50,7 +50,7 @@ public class AuteurController {
         System.out.println("controller save=" + auteur.getNom());
         if(auteur.getId() != null) {
             Auteur current = auteurService.getAuteur(auteur.getId());
-            auteur.setNom(current.getNom());
+
         }
         auteurService.saveAuteur(auteur);
         return new ModelAndView("redirect:/homeAuteur");
@@ -59,9 +59,7 @@ public class AuteurController {
     @GetMapping("/updateAuteur/{id}")
     public String updateAuteur(@PathVariable("id") final int id, Model model) {
         Auteur a = auteurService.getAuteur(id);
-        model.addAttribute("article", a);
-
-
+        model.addAttribute("auteur", a);
 
         return "auteur/formUpdateAuteur";
     }
