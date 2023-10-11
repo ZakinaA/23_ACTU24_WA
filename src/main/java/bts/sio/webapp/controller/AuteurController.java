@@ -6,10 +6,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Data
@@ -50,7 +47,6 @@ public class AuteurController {
         System.out.println("controller save=" + auteur.getNom());
         if(auteur.getId() != null) {
             Auteur current = auteurService.getAuteur(auteur.getId());
-
         }
         auteurService.saveAuteur(auteur);
         return new ModelAndView("redirect:/homeAuteur");
@@ -60,6 +56,8 @@ public class AuteurController {
     public String updateAuteur(@PathVariable("id") final int id, Model model) {
         Auteur a = auteurService.getAuteur(id);
         model.addAttribute("auteur", a);
+
+
 
         return "auteur/formUpdateAuteur";
     }
