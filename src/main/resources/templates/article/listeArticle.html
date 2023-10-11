@@ -55,7 +55,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            <div class="form-group">
+                <label for="athleteInput">Athlète :</label>
+                <select id="athleteInput" class="form-control">
+                    <option value="">Sélectionnez un athlète</option>
+                    <option th:each="athlete : ${listAthlete}" th:value="${id}" th:text="${nom}"></option>
+                </select>
+            </div>
             <div th:each="article: ${articles}" class="article">
+
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
                 <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
@@ -74,7 +82,28 @@
                     </a>
                 </td>
         </div>
-    </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+            <script>
+                document.getElementById("athleteInput").addEventListener("change", function () {
+                    var selectedAthleteId = this.value;
+
+                    // Rediriger vers la page /listeArticle avec l'ID de l'athlète sélectionné
+                    if (selectedAthleteId) {
+                        window.location.href = "/filtreArticle?athleteId=" + selectedAthleteId;
+                    } else {
+                        // Si "Sélectionnez un athlète" est sélectionné, rediriger vers la page /listeArticle sans le paramètre athleteId
+                        window.location.href = "/filtreArticle";
+                    }
+                });
+            </script>
+
+
+
+
+
+
+        </div>
 </div>
 
 
