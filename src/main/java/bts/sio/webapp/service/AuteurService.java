@@ -35,6 +35,7 @@ public class AuteurService {
 
         // Functional rule : Last name must be capitalized.
         auteur.setNom(auteur.getNom().toUpperCase());
+        auteur.setPrenom(auteur.getPrenom());
 
         if(auteur.getId() == null) {
             // If id is null, then it is a new employee.
