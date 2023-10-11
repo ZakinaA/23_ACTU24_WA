@@ -25,7 +25,7 @@
 
     <h2 class="h2">Modification d'un auteur</h2>
     <div>
-        <form method="post" th:action="@{/updateAuteur}" th:object="${auteur}">
+        <form method="post" th:action="@{/saveAuteur}" th:object="${auteur}">
             <div class="form-group">
                 <input
                         type="hidden" th:field="*{id}" class="form-control">
@@ -42,9 +42,37 @@
                 <small id="prenomHelp" class="form-text text-muted">Merci d'écrire le prénom de l'auteur.</small>
             </div>
 
-            <a th:href="@{/updateAuteur/{id}(id=${auteur.id})}"><button type="submit" class="btn btn-primary">Sauvegarder</button>
+            <a th:href="@{/updateAuteur/{id}(id=${auteur.id})}"><button type="submit" class="btn btn-primary">Sauvegarder</button></a>
 
         </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sélectionnez les champs nécessaires
+                const nomInput = document.getElementById("nomInput");
+                const prenomInput = document.getElementById("prenomInput");
+
+                // Fonction pour vérifier si tous les champs sont remplis
+                function checkFields() {
+                    const nomValue = nomInput.value.trim();
+                    const prenomValue = prenomInput.value.trim();
+
+                    // Activer le bouton si tous les champs requis sont remplis
+                    if (nomValue !== "" && prenomValue !== "") {
+                        inscritButton.disabled = false;
+                    } else {
+                        inscritButton.disabled = true;
+                    }
+                }
+
+                // Écoutez les événements de changement pour chaque champ
+                nomInput.addEventListener("input", checkFields);
+                prenomInput.addEventListener("input", checkFields);
+
+                // Assurez-vous que le bouton est désactivé au chargement initial
+                checkFields();
+            });
+        </script>
+
     </div>
 
 </div>
