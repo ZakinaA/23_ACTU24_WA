@@ -79,7 +79,13 @@ public class ArticleController {
         return "article/formNewArticle";
     }
 
-    @PostMapping("/saveArticle")
+    @GetMapping("/deleteArticle/{id}")
+    public ModelAndView deleteArticle(@PathVariable("id") final int id) {
+        articleService.deleteArticle(id);
+        return new ModelAndView("redirect:/listeArticle");
+    }
+
+    /**@PostMapping("/saveArticle")
     public ModelAndView saveArticle(@ModelAttribute Article article) {
         System.out.println("controller save=" + article.getTitre());
 
@@ -110,12 +116,49 @@ public class ArticleController {
         model.addAttribute("listAuteur", listAuteur);
 
         return "article/formUpdateArticle";
+    }*/
+
+    /**@PostMapping("/saveArticle")
+    public ModelAndView saveArticle(@ModelAttribute Article article) {
+        System.out.println("controller save=" + article.getTitre());
+        if(article.getId() != null) {
+            Article current = articleService.getArticle(article.getId());
+        }
+        articleService.saveArticle(article);
+        return new ModelAndView("redirect:/listeArticle");
+    }*/
+
+    @PostMapping("/saveArticle")
+    public ModelAndView saveArticle(@ModelAttribute Article article) {
+        System.out.println("Controller save article=" + article.getTitre());
+        System.out.println("Controller - L'ID est " + article.getId());
+        if (article.getId() != null) {
+            Article current = articleService.getArticle(article.getId());
+            current.setTitre(article.getTitre());
+        }
+        System.out.println(("test1"));
+        System.out.println("Controller 2 - L'ID est " + article.getId());
+        articleService.saveArticle(article);
+        System.out.println(("test2"));
+        return new ModelAndView("redirect:/listeArticle");
     }
 
-    @GetMapping("/deleteArticle/{id}")
-    public ModelAndView deleteArticle(@PathVariable("id") final int id) {
-        articleService.deleteArticle(id);
-        return new ModelAndView("redirect:/listeArticle");
+
+    @GetMapping("/updateArticle/{id}")
+    public String updateArticle(@PathVariable("id") final int id, Model model) {
+        Article article = articleService.getArticle(id);
+        model.addAttribute("article", article);
+
+        Iterable<Athlete> listAthlete = athleteservice.getAthletes();
+        model.addAttribute("listAthlete", listAthlete);
+
+        Iterable<Pays> listPays = paysService.getLesPays();
+        model.addAttribute("listPays", listPays);
+
+        Iterable<Auteur> listAuteur = auteurService.getAuteurs();
+        model.addAttribute("listAuteur", listAuteur);
+
+        return "article/formUpdateArticle";
     }
 
 }

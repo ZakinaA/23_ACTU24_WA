@@ -24,9 +24,10 @@
 <div class="container special">
     <h2 class="h2">Mise à jour d'un article</h2><br/>
     <div>
-        <form method="put" th:action="@{/saveArticle}" th:object="${article}">
+        <form method="post" th:action="@{/saveArticle}" th:object="${article}">
             <div class="form-group">
                 <label for="titreInput">Titre</label>
+                <input type="hidden" th:field="*{id}" name="id" />
                 <input type="text" th:field="*{titre}" class="form-control" id="titreInput"
                        aria-describedby="titreHelp" placeholder="Saisir le titre de l'article">
                 <small id="titreHelp" class="form-text text-muted">Merci de saisir le titre de l'article.</small>
