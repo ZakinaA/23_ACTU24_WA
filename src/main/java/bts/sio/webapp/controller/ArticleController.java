@@ -8,16 +8,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Data
 @Controller
@@ -27,7 +32,7 @@ public class ArticleController {
     private AthleteService athleteservice;
 
     @Autowired
-    private ArticleService articleservice;
+    private ArticleService articleService;
 
     @Autowired
     private EpreuveService epreuveservice;
@@ -43,7 +48,7 @@ public class ArticleController {
 
     @GetMapping("/listeArticle")
     public String listeArticle(Model model) {
-        Iterable<Article> listArticles = articleservice.getArticles();
+        Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
         listArticles.forEach(articles::add);
@@ -57,17 +62,46 @@ public class ArticleController {
 
     }
 
+    @GetMapping("/filtreArticle")
+    public String listeArticle(@RequestParam("athleteId") Long athleteId, Model model) {
+        Iterable<Article> listArticles = articleService.getArticles();
+
+        List<Article> articles = new ArrayList<>();
+        listArticles.forEach(articles::add);
+
+        // Filtrer les articles en fonction de l'ID de l'athlète (convert Long to Integer)
+        articles = articles.stream()
+                .filter(article -> article.getAthlete().getId().intValue() == athleteId.intValue())
+                .sorted(Comparator.comparing(Article::getDate)
+                        .thenComparing(Article::getHeure)
+                        .reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("articles", articles);
+        return "/article/listeArticle";
+    }
+
+
+    @GetMapping("/articles/chercher")
+    public String chercherArticle(@RequestParam("motCle") String motCle, Model model) {
+        List<Article> articlesTrouves = articleService.chercherArticlesParMotCle(motCle);
+        model.addAttribute("articles", articlesTrouves);
+        return "article/chercherArticle"; // Nom de la vue pour afficher les résultats
+    }
+
+
+
     @GetMapping("/consulterArticle/{id}")
     public String consulterArticle(@PathVariable("id") final int id, Model model) {
-        Article article = articleservice.getArticle(id);
+        Article article = articleService.getArticle(id);
         model.addAttribute("article", article);
         return "article/consulterArticle";
     }
 
     @GetMapping("/createArticle")
     public String createArticle(Model model) {
-        Article a = new Article();
-        model.addAttribute("article", a);
+        Article article = new Article();
+        model.addAttribute("article", article);
 
         Iterable<Athlete> listAthlete = athleteservice.getAthletes();
         model.addAttribute("listAthlete", listAthlete);
@@ -84,21 +118,29 @@ public class ArticleController {
         return "article/formNewArticle";
     }
 
-    @PostMapping("/saveArticle")
-    public ModelAndView saveArticle(@ModelAttribute Article article) {
-        System.out.println("controller save=" + article.getTitre());
-        if(article.getId() != null) {
-            Article current = articleservice.getArticle(article.getId());
-            article.setTitre(current.getTitre());
-        }
-        articleservice.saveArticle(article);
+    @GetMapping("/deleteArticle/{id}")
+    public ModelAndView deleteArticle(@PathVariable("id") final int id) {
+        articleService.deleteArticle(id);
         return new ModelAndView("redirect:/listeArticle");
     }
 
+    @PostMapping("/saveArticle")
+    public ModelAndView saveArticle(@ModelAttribute Article article) {
+        if (article.getId() != null) {
+            Article current = articleService.getArticle(article.getId());
+            current.setTitre(article.getTitre());
+        }
+        articleService.saveArticle(article);
+        return new ModelAndView("redirect:/listeArticle");
+    }
+
+
     @GetMapping("/updateArticle/{id}")
     public String updateArticle(@PathVariable("id") final int id, Model model) {
-        Article a = articleservice.getArticle(id);
-        model.addAttribute("article", a);
+
+        System.out.println("La date est " + articleService.getArticle(id).getDate());
+        Article article = articleService.getArticle(id);
+        model.addAttribute("article", article);
 
         Iterable<Athlete> listAthlete = athleteservice.getAthletes();
         model.addAttribute("listAthlete", listAthlete);
@@ -111,6 +153,7 @@ public class ArticleController {
 
         return "article/formUpdateArticle";
     }
+
 
     @GetMapping("/deleteArticle/{id}")
     public ModelAndView deleteArticle(@PathVariable("id") final int id) {
@@ -139,5 +182,7 @@ public class ArticleController {
             return ResponseEntity.badRequest().body("File not provided for upload.");
         }
     }
+
+
 
 }

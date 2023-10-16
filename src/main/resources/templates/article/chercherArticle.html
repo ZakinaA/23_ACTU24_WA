@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+  <title>Actu24 - L'actualité du sport</title>
+
+  <style>
+    body {
+      padding-top: 80px;
+      background-color: #f4f4f4;
+    }
+
+    .article {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .article h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .article p {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .article img {
+      max-width: 100%;
+      margin-top: 10px;
+      float: right;
+      margin-left: 20px;
+    }
+
+    .article a.btn {
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+
+      <!-- Ajout du conteneur pour la recherche -->
+      <div class="search-container">
+        <label for="motCle">Rechercher un article :</label>
+        <form action="/articles/chercher" method="get">
+          <input type="text" name="motCle" id="motCle" placeholder="Rechercher un article">
+          <input type="submit" value="Chercher">
+        </form>
+      </div>
+      <div th:if="${articles.isEmpty()}">
+        <p>Aucun article trouvé. </p>
+        <a href="/listeArticle">Revenir à la page principale</a>
+      </div>
+      <div th:unless="${articles.isEmpty()}">
+      <div th:each="article: ${articles}" class="article">
+        <h3 th:text="${article.titre}">Titre de l'article</h3>
+        <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
+        <p th:text="${article.contenu}">Contenu de l'article.</p>
+        <img th:if="${article.image != null}" th:src="@{'src/main/resources/image/' + ${article.image}}" alt="Image de l'article">
+        <p th:text="'Pays : ' + ${article.pays.nom}">Pays de l'événement</p>
+        <p th:text="'Athlete : ' + ${article.athlete.nom}">Nom : Nom de l'athlète</p>
+        <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
+        <p th:text="'Publié le ' + ${article.date} + ' à ' + ${article.heure} + ' par ' + ${article.auteur.nom} + ' ' + ${article.auteur.prenom}">Date de Publication de l'article</p>
+
+        <!-- Ajout des actions pour chaque article -->
+        <div class="article-actions">
+          <a th:href="@{'/consulterArticle/' + ${article.id}}" class="btn btn-primary">
+            Lire la suite
+          </a>
+          <a th:href="@{/updateArticle/{id}(id=${article.id})}" class="btn btn-info">Modifier</a>
+          <a th:href="@{/deleteArticle/{id}(id=${article.id})}" class="btn btn-danger" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">Supprimer</a>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+  document.getElementById("motCle").addEventListener("change", function () {
+    // Rediriger vers la page /articles/chercher avec le mot-clé saisi
+    var motCle = this.value;
+    window.location.href = "/articles/chercher?motCle=" + motCle;
+  });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

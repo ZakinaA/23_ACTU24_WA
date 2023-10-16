@@ -12,41 +12,41 @@
 
     <style>
         body {
-            padding-top: 80px; /* Augmenter l'espacement au-dessus du contenu */
-            background-color: #f4f4f4; /* Ajouter une couleur de fond */
+            padding-top: 80px;
+            background-color: #f4f4f4;
         }
 
         .article {
             margin-bottom: 20px;
             padding: 20px;
             border: 1px solid #ddd;
-            background-color: #fff; /* Fond blanc pour chaque article */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajouter une ombre légère */
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .article h3 {
             font-size: 24px;
             margin-bottom: 10px;
-            color: #333; /* Couleur de texte plus foncée pour les titres */
+            color: #333;
         }
 
         .article p {
             font-size: 16px;
             margin-bottom: 10px;
-            color: #666; /* Couleur de texte légèrement plus claire */
+            color: #666;
         }
 
         .article img {
-            max-width: 100%; /* Assurez-vous que les images ne dépassent pas de leur conteneur */
+            max-width: 100%;
             margin-top: 10px;
-            float: right; /* Aligner l'image à droite */
-            margin-left: 20px; /* Ajouter un espacement entre le texte et l'image */
+            float: right;
+            margin-left: 20px;
         }
 
         .article a.btn {
             font-size: 16px;
-            background-color: #007bff; /* Couleur de fond bleue pour le bouton */
-            color: #fff; /* Couleur de texte blanche pour le bouton */
+            background-color: #007bff;
+            color: #fff;
         }
     </style>
 </head>
@@ -55,7 +55,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            <div class="form-group">
+                <label for="motCle">Rechercher un article :</label>
+                <form action="/articles/chercher" method="get">
+                    <input type="text" name="motCle" id="motCle" placeholder="Rechercher un article">
+                    <input type="submit" value="Chercher">
+                </form>
+            </div>
+
             <div th:each="article: ${articles}" class="article">
+                <!-- Affichage des articles ici comme dans votre exemple -->
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
                 <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
@@ -64,25 +73,31 @@
                 <p th:text="'Athlete : ' + ${article.athlete.nom}">Nom : Nom de l'athlète</p>
                 <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
                 <p th:text="'Publié le ' + ${article.date} + ' à ' + ${article.heure} + ' par ' + ${article.auteur.nom} + ' ' + ${article.auteur.prenom}">Date de Publication de l'article</p>
-                <td><a th:href="@{'/consulterArticle/' + ${article.id}}" class="btn btn-primary">
+                <a th:href="@{'/consulterArticle/' + ${article.id}}" class="btn btn-primary">
                     Lire la suite
-                </a></td>
-                <td>
-                    <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
-                    <a th:href="@{/deleteArticle/{id}(id=${article.id})}" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">
-                        <button class="btn btn-danger">Supprimer</button>
-                    </a>
-                </td>
+                </a>
+                <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button class="btn btn-info">Modifier</button></a>
+                <a th:href="@{/deleteArticle/{id}(id=${article.id})}" onclick="return confirm('Êtes vous sûr de vouloir supprimer');">
+                    <button class="btn btn-danger">Supprimer</button>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script>
+    document.getElementById("motCle").addEventListener("change", function () {
+        // Rediriger vers la page /articles/chercher avec le mot-clé saisi
+        var motCle = this.value;
+        window.location.href = "/articles/chercher?motCle=" + motCle;
+    });
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-</div>
 </body>
 </html>
