@@ -8,6 +8,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 @Data
 @Service
 public class ArticleService {
@@ -41,5 +46,28 @@ public class ArticleService {
         }
 
         return savedArticle;
+    }
+
+
+    public List<Article> chercherArticlesParMotCle(String motCle) {
+        Iterable<Article> articles = getArticles(); // Récupérer les articles via articleProxy
+
+        List<Article> articlesTrouves = new ArrayList<>();
+
+        for (Article article : articles) {
+            if (article.getTitre().toLowerCase().contains(motCle.toLowerCase()) ||
+                    article.getPays().getNom().toLowerCase().contains(motCle.toLowerCase()) ||
+                    article.getAthlete().getNom().toLowerCase().contains(motCle.toLowerCase()) ||
+                    article.getAthlete().getSport().getNom().toLowerCase().contains(motCle.toLowerCase())) {
+                articlesTrouves.add(article);
+            }
+        }
+
+        // Triez les articles par date et heure en utilisant le comparateur
+        articlesTrouves.sort(Comparator.comparing(Article::getDate)
+                .thenComparing(Article::getHeure)
+                .reversed());
+
+        return articlesTrouves;
     }
 }

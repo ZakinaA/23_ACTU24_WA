@@ -73,6 +73,14 @@ public class ArticleController {
     }
 
 
+    @GetMapping("/articles/chercher")
+    public String chercherArticle(@RequestParam("motCle") String motCle, Model model) {
+        List<Article> articlesTrouves = articleservice.chercherArticlesParMotCle(motCle);
+        model.addAttribute("articles", articlesTrouves);
+        return "article/chercherArticle"; // Nom de la vue pour afficher les résultats
+    }
+
+
 
     @GetMapping("/consulterArticle/{id}")
     public String consulterArticle(@PathVariable("id") final int id, Model model) {
