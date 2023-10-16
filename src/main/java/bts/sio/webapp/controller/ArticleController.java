@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.*;
 
 @Data
 @Controller
@@ -51,6 +52,35 @@ public class ArticleController {
         return "/article/listeArticle";
 
     }
+
+    @GetMapping("/filtreArticle")
+    public String listeArticle(@RequestParam("athleteId") Long athleteId, Model model) {
+        Iterable<Article> listArticles = articleservice.getArticles();
+
+        List<Article> articles = new ArrayList<>();
+        listArticles.forEach(articles::add);
+
+        // Filtrer les articles en fonction de l'ID de l'athlète (convert Long to Integer)
+        articles = articles.stream()
+                .filter(article -> article.getAthlete().getId().intValue() == athleteId.intValue())
+                .sorted(Comparator.comparing(Article::getDate)
+                        .thenComparing(Article::getHeure)
+                        .reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("articles", articles);
+        return "/article/listeArticle";
+    }
+
+
+    @GetMapping("/articles/chercher")
+    public String chercherArticle(@RequestParam("motCle") String motCle, Model model) {
+        List<Article> articlesTrouves = articleservice.chercherArticlesParMotCle(motCle);
+        model.addAttribute("articles", articlesTrouves);
+        return "article/chercherArticle"; // Nom de la vue pour afficher les résultats
+    }
+
+
 
     @GetMapping("/consulterArticle/{id}")
     public String consulterArticle(@PathVariable("id") final int id, Model model) {
