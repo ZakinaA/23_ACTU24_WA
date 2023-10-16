@@ -33,15 +33,16 @@ public class ArticleService {
     }
 
     public Article saveArticle(Article article) {
+
         Article savedArticle;
 
-        // Functional rule : Last name must be capitalized.
         article.setTitre(article.getTitre().toUpperCase());
 
         if(article.getId() == null) {
-            // If id is null, then it is a new employee.
+            // Si l'ID est vide, créé un nouvel employé
             savedArticle = articleProxy.createArticle(article);
         } else {
+            // Sinon, mets à jour l'ID les données de l'ID existante
             savedArticle = articleProxy.updateArticle(article);
         }
 
@@ -70,4 +71,5 @@ public class ArticleService {
 
         return articlesTrouves;
     }
+
 }

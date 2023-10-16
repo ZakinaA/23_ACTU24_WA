@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
     <title>Update Article</title>
 
     <style>
@@ -20,19 +21,13 @@
     </style>
 </head>
 <body>
-
 <div class="container special">
-
-    <h2 class="h2">Modification d'un article</h2>
+    <h2 class="h2">Mise à jour d'un article</h2><br/>
     <div>
-        <form method="post"
-              th:action="@{/updateArticle}" th:object="${article}">
-            <div class="form-group">
-                <input
-                        type="hidden" th:field="*{id}" class="form-control">
-            </div>
+        <form method="post" th:action="@{/saveArticle}" th:object="${article}">
             <div class="form-group">
                 <label for="titreInput">Titre</label>
+                <input type="hidden" th:field="*{id}" name="id" />
                 <input type="text" th:field="*{titre}" class="form-control" id="titreInput"
                        aria-describedby="titreHelp" placeholder="Saisir le titre de l'article">
                 <small id="titreHelp" class="form-text text-muted">Merci de saisir le titre de l'article.</small>
@@ -61,7 +56,8 @@
             <div class="form-group">
                 <label for="dateInput">Date de Publication</label>
                 <input type="date" th:field="*{date}" class="form-control" id="dateInput"
-                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article" th:value="${article.date}">
+                <p th:text="'Publié le ' + ${article.date}"></p>
                 <small id="dateHelp" class="form-text text-muted">Merci de saisir datePublication de l'article.</small>
             </div>
 
@@ -92,22 +88,63 @@
                 <label for="auteurInput">Auditeur de l'article :</label>
                 <select id="auteurInput" class="form-control" th:field="*{auteur.id}">
                     <option value="">Sélectionnez un auteur</option>
-                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom}"></option>
+                    <option th:each="auteur : ${listAuteur}" th:value="${auteur.id}" th:text="${auteur.nom} + ' ' + ${auteur.prenom}"></option>
                 </select>
             </div>
+            <p>Si vous n'êtes pas dans la liste des auditeurs, vous pouvez <a th:href="@{/createAuteur}">vous inscrire</a>.</p>
 
-            <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary">Sauvegarder</button>
 
-
+            <a th:href="@{/updateArticle/{id}(id=${article.id})}"><button type="submit" class="btn btn-primary" id="updateButton">Mettre à jour</button></a>
         </form>
-    </div>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sélectionnez les champs nécessaires
+                const titreInput = document.getElementById("titreInput");
+                const contenuInput = document.getElementById("contenuInput");
+                const dateInput = document.getElementById("dateInput");
+                const heureInput = document.getElementById("heureInput");
+                const athleteInput = document.getElementById("athleteInput");
+                const paysInput = document.getElementById("paysInput");
+                const auteurInput = document.getElementById("auteurInput");
+                const updateButton = document.getElementById("updateButton");
+
+                // Fonction pour vérifier si tous les champs sont remplis
+                function checkFields() {
+                    const titreValue = titreInput.value.trim();
+                    const contenuValue = contenuInput.value.trim();
+                    const dateValue = dateInput.value.trim();
+                    const heureValue = heureInput.value.trim();
+                    const athleteValue = athleteInput.value.trim();
+                    const paysValue = paysInput.value.trim();
+                    const auteurValue = auteurInput.value.trim();
+
+                    // Activer le bouton si tous les champs requis sont remplis
+                    if (titreValue !== "" && contenuValue !== "" && dateValue !== "" && heureValue !== "" && athleteValue !== "" && paysValue !== "" && auteurValue !== "") {
+                        updateButton.disabled = false;
+                    } else {
+                        updateButton.disabled = true;
+                    }
+                }
+
+                // Écoutez les événements de changement pour chaque champ
+                titreInput.addEventListener("input", checkFields);
+                contenuInput.addEventListener("input", checkFields);
+                dateInput.addEventListener("input", checkFields);
+                heureInput.addEventListener("input", checkFields);
+                athleteInput.addEventListener("change", checkFields);
+                paysInput.addEventListener("change", checkFields);
+                auteurInput.addEventListener("change", checkFields);
+
+                // Assurez-vous que le bouton est désactivé au chargement initial
+                checkFields();
+            });
+        </script>
+    </div>
 </div>
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 </body>
