@@ -90,7 +90,6 @@ public class ArticleController {
     }
 
 
-
     @GetMapping("/consulterArticle/{id}")
     public String consulterArticle(@PathVariable("id") final int id, Model model) {
         Article article = articleService.getArticle(id);
@@ -153,36 +152,5 @@ public class ArticleController {
 
         return "article/formUpdateArticle";
     }
-
-
-    @GetMapping("/deleteArticle/{id}")
-    public ModelAndView deleteArticle(@PathVariable("id") final int id) {
-        articleservice.deleteArticle(id);
-        return new ModelAndView("redirect:/listeArticle");
-    }
-
-    @PostMapping("/uploadImage")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                String filename = file.getOriginalFilename();
-                // Sauvegardez le fichier dans le répertoire images
-                Path path = Paths.get("images/" + filename);
-                Files.write(path, bytes);
-                // Mettez à jour le modèle Article avec le nom du fichier
-                Article article = new Article();
-                article.setNomImage(filename);
-                articleservice.saveArticle(article);
-                return ResponseEntity.ok("File uploaded successfully.");
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body("File upload failed.");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("File not provided for upload.");
-        }
-    }
-
-
 
 }
