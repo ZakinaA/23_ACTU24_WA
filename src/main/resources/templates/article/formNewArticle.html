@@ -47,9 +47,9 @@
             </div>
 
             <div class="form-group">
-                <label for="imageInput">Image</label>
-                <input type="file" name="image" id="imageInput" class="form-control-file">
-                <small id="imageHelp" class="form-text text-muted">Sélectionnez une image pour l'article.</small>
+                <label for="filedataInput">Image</label>
+                <input type="file" th:field="*{nomImage}" name="image" id="filedataInput" class="form-control-file">
+                <small id="filedataHelp" class="form-text text-muted">Sélectionnez une image pour l'article.</small>
             </div>
 
             <div class="form-group" style="display: none;">
@@ -139,7 +139,7 @@
             });
         </script>
 
-        // Code JavaScript qui permet de recuperer la date et heure automatiquement dans le formulaire
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Sélectionnez les champs date et heure

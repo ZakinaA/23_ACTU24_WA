@@ -4,14 +4,16 @@ import bts.sio.webapp.model.*;
 import bts.sio.webapp.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -114,6 +116,28 @@ public class ArticleController {
     public ModelAndView deleteArticle(@PathVariable("id") final int id) {
         articleservice.deleteArticle(id);
         return new ModelAndView("redirect:/listeArticle");
+    }
+
+    @PostMapping("/uploadImage")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                String filename = file.getOriginalFilename();
+                // Sauvegardez le fichier dans le répertoire images
+                Path path = Paths.get("images/" + filename);
+                Files.write(path, bytes);
+                // Mettez à jour le modèle Article avec le nom du fichier
+                Article article = new Article();
+                article.setNomImage(filename);
+                articleservice.saveArticle(article);
+                return ResponseEntity.ok("File uploaded successfully.");
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("File upload failed.");
+            }
+        } else {
+            return ResponseEntity.badRequest().body("File not provided for upload.");
+        }
     }
 
 }
