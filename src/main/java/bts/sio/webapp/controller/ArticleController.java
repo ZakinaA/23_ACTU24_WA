@@ -55,7 +55,7 @@ public class ArticleController {
 
     @GetMapping("/filtreArticle")
     public String listeArticle(@RequestParam("athleteId") Long athleteId, Model model) {
-        Iterable<Article> listArticles = articleservice.getArticles();
+        Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
         listArticles.forEach(articles::add);
@@ -75,7 +75,7 @@ public class ArticleController {
 
     @GetMapping("/articles/chercher")
     public String chercherArticle(@RequestParam("motCle") String motCle, Model model) {
-        List<Article> articlesTrouves = articleservice.chercherArticlesParMotCle(motCle);
+        List<Article> articlesTrouves = articleService.chercherArticlesParMotCle(motCle);
         model.addAttribute("articles", articlesTrouves);
         return "article/chercherArticle"; // Nom de la vue pour afficher les résultats
     }
