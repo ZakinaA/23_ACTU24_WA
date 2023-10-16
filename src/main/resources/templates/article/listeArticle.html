@@ -68,7 +68,7 @@
                 <h3 th:text="${article.titre}">Titre de l'article</h3>
                 <p th:text="${article.soustitre}">Sous Titre de l'article.</p>
                 <p th:text="${article.contenu}">Contenu de l'article.</p>
-                <img th:if="${article.image != null}" th:src="@{'src/main/resources/image/' + ${article.image}}" alt="Image de l'article">
+                <img th:src="@{'/' + ${article.nomImage} + '/' }" width="180">
                 <p th:text="'Pays : ' + ${article.pays.nom}">Pays de l'événement</p>
                 <p th:text="'Athlete : ' + ${article.athlete.nom}">Nom : Nom de l'athlète</p>
                 <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
