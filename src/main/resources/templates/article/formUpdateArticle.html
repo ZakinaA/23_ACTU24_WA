@@ -56,7 +56,8 @@
             <div class="form-group">
                 <label for="dateInput">Date de Publication</label>
                 <input type="date" th:field="*{date}" class="form-control" id="dateInput"
-                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article">
+                       aria-describedby="heureHelp" placeholder="Saisir le contenu de l'article" th:value="${article.date}">
+                <p th:text="'Publié le ' + ${article.date}"></p>
                 <small id="dateHelp" class="form-text text-muted">Merci de saisir datePublication de l'article.</small>
             </div>
 

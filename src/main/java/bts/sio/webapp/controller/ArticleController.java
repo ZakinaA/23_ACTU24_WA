@@ -98,6 +98,8 @@ public class ArticleController {
 
     @GetMapping("/updateArticle/{id}")
     public String updateArticle(@PathVariable("id") final int id, Model model) {
+
+        System.out.println("La date est " + articleService.getArticle(id).getDate());
         Article article = articleService.getArticle(id);
         model.addAttribute("article", article);
 
