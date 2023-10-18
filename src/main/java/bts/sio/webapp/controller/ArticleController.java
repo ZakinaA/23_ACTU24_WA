@@ -4,10 +4,8 @@ import bts.sio.webapp.model.*;
 import bts.sio.webapp.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,8 +42,8 @@ public class ArticleController {
     @Autowired
     private AuteurService auteurService;
 
-    @GetMapping("/listeArticle")
-    public String listeArticle(Model model) {
+    @GetMapping("/listeArticles")
+    public String listeArticles(Model model) {
         Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
@@ -56,12 +54,12 @@ public class ArticleController {
                 .reversed());
 
         model.addAttribute("articles", articles);
-        return "/article/listeArticle";
+        return "article/listeArticles";
 
     }
 
     @GetMapping("/filtreArticle")
-    public String listeArticle(@RequestParam("athleteId") Long athleteId, Model model) {
+    public String listeArticles(@RequestParam("athleteId") Long athleteId, Model model) {
         Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
@@ -76,7 +74,7 @@ public class ArticleController {
                 .collect(Collectors.toList());
 
         model.addAttribute("articles", articles);
-        return "/article/listeArticle";
+        return "article/listeArticles";
     }
 
 
@@ -118,7 +116,7 @@ public class ArticleController {
     @GetMapping("/deleteArticle/{id}")
     public ModelAndView deleteArticle(@PathVariable("id") final int id) {
         articleService.deleteArticle(id);
-        return new ModelAndView("redirect:/listeArticle");
+        return new ModelAndView("redirect:/listeArticles");
     }
 
     @PostMapping("/saveArticle")
@@ -128,7 +126,7 @@ public class ArticleController {
             current.setTitre(article.getTitre());
         }
         articleService.saveArticle(article);
-        return new ModelAndView("redirect:/listeArticle");
+        return new ModelAndView("redirect:/listeArticles");
     }
 
 
@@ -154,7 +152,7 @@ public class ArticleController {
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/images/article";
 
     @GetMapping("/uploadimage") public String displayUploadForm() {
-        return "redirect:/listeArticle";
+        return "redirect:/listeArticles";
     }
 
     @PostMapping("/upload") public String uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
@@ -163,6 +161,6 @@ public class ArticleController {
         fileNames.append(file.getOriginalFilename());
         Files.write(fileNameAndPath, file.getBytes());
         model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
-        return "redirect:/listeArticle";
+        return "redirect:/listeArticles";
     }
 }
