@@ -4,10 +4,18 @@ import bts.sio.webapp.model.*;
 import bts.sio.webapp.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -143,4 +151,18 @@ public class ArticleController {
         return "article/formUpdateArticle";
     }
 
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/images/article";
+
+    @GetMapping("/uploadimage") public String displayUploadForm() {
+        return "redirect:/listeArticle";
+    }
+
+    @PostMapping("/upload") public String uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
+        StringBuilder fileNames = new StringBuilder();
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+        fileNames.append(file.getOriginalFilename());
+        Files.write(fileNameAndPath, file.getBytes());
+        model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+        return "redirect:/listeArticle";
+    }
 }
