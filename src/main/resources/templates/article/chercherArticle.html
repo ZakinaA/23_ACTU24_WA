@@ -68,7 +68,7 @@
       </div>
       <div th:if="${articles.isEmpty()}">
         <p>Aucun article trouvé. </p>
-        <a href="/listeArticle">Revenir à la page principale</a>
+        <a href="/listeArticles">Revenir à la page principale</a>
       </div>
       <div th:unless="${articles.isEmpty()}">
       <div th:each="article: ${articles}" class="article">

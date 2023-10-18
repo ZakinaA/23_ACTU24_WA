@@ -34,7 +34,7 @@
         <p th:text="'Sport Athlete : ' + ${article.athlete.sport.nom}">Nom : Nom de l'athlète</p>
         <p th:text="'Publié le ' + ${article.date} + ' à ' + ${article.heure} + ' par ' + ${article.auteur.nom} + ' ' + ${article.auteur.prenom}">Date de Publication de l'article</p>
         <td>
-            <a th:href="@{/listeArticle}"><button class="btn btn-primary">Retour aux articles</button></a>
+            <a th:href="@{/listeArticles}"><button class="btn btn-primary">Retour aux articles</button></a>
         </td>
 
     </div>
