@@ -36,8 +36,8 @@ public class ArticleController {
     @Autowired
     private AuteurService auteurService;
 
-    @GetMapping("/listeArticle")
-    public String listeArticle(Model model) {
+    @GetMapping("/listeArticles")
+    public String listeArticles(Model model) {
         Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
@@ -48,12 +48,12 @@ public class ArticleController {
                 .reversed());
 
         model.addAttribute("articles", articles);
-        return "/article/listeArticle";
+        return "article/listeArticles";
 
     }
 
     @GetMapping("/filtreArticle")
-    public String listeArticle(@RequestParam("athleteId") Long athleteId, Model model) {
+    public String listeArticles(@RequestParam("athleteId") Long athleteId, Model model) {
         Iterable<Article> listArticles = articleService.getArticles();
 
         List<Article> articles = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ArticleController {
                 .collect(Collectors.toList());
 
         model.addAttribute("articles", articles);
-        return "/article/listeArticle";
+        return "article/listeArticles";
     }
 
 
@@ -110,7 +110,7 @@ public class ArticleController {
     @GetMapping("/deleteArticle/{id}")
     public ModelAndView deleteArticle(@PathVariable("id") final int id) {
         articleService.deleteArticle(id);
-        return new ModelAndView("redirect:/listeArticle");
+        return new ModelAndView("redirect:/listeArticles");
     }
 
     @PostMapping("/saveArticle")
@@ -120,7 +120,7 @@ public class ArticleController {
             current.setTitre(article.getTitre());
         }
         articleService.saveArticle(article);
-        return new ModelAndView("redirect:/listeArticle");
+        return new ModelAndView("redirect:/listeArticles");
     }
 
 
