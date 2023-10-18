@@ -20,11 +20,11 @@ public class AuteurController {
     @Autowired
     private PaysService paysService;
 
-    @GetMapping("/homeAuteur")
-    public String homeAuteur(Model model) {
+    @GetMapping("/listeAuteurs")
+    public String listeAuteurs(Model model) {
         Iterable<Auteur> listAuteurs = auteurService.getAuteurs();
         model.addAttribute("auteurs", listAuteurs);
-        return "/auteur/homeAuteur";
+        return "auteur/listeAuteurs";
     }
 
 
@@ -39,7 +39,7 @@ public class AuteurController {
     @GetMapping("/deleteAuteur/{id}")
     public ModelAndView deleteAuteur(@PathVariable("id") final int id) {
         auteurService.deleteAuteur(id);
-        return new ModelAndView("redirect:/homeAuteur");
+        return new ModelAndView("redirect:/listeAuteurs");
     }
 
     @PostMapping("/saveAuteur")
@@ -49,7 +49,7 @@ public class AuteurController {
             Auteur current = auteurService.getAuteur(auteur.getId());
         }
         auteurService.saveAuteur(auteur);
-        return new ModelAndView("redirect:/homeAuteur");
+        return new ModelAndView("redirect:/listeAuteurs");
     }
 
     @GetMapping("/updateAuteur/{id}")
