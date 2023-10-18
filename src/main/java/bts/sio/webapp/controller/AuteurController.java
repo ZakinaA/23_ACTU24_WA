@@ -57,8 +57,6 @@ public class AuteurController {
         Auteur a = auteurService.getAuteur(id);
         model.addAttribute("auteur", a);
 
-
-
         return "auteur/formUpdateAuteur";
     }
 
